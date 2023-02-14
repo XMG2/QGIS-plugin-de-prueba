@@ -1,0 +1,9 @@
+[general]
+name=pluginPrueba
+description=plugin de prueba para ver como funcionan los plugins
+about=Primer plugin que hago. No va a tener funcionalidades interesantes
+version=1.0
+qgisMinimumVersion=3.26.2
+author=xm
+email=xmgutierrez-ext@itracasa.es
+repository=https://github.com/XMG2/QGIS-plugin-de-prueba
