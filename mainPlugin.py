@@ -47,6 +47,8 @@ class pluginTest:
     
     def run(self):
         #Es una funcion aparte para iniciar la ejecucion del algoritmo de procesamiento
+        #Este nombre tiene que ser el que aparece cuando colocas encima del algoritmo el raton
+        #en la caja de herramientas. Es el id del provider + ':' + el nombre del algoritmo
         processing.execAlgorithmDialog('save_attributes:save2CSV')
     
     def abrir_buscador(self):

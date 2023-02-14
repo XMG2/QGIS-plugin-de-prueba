@@ -15,53 +15,29 @@ class save2CSV(QgsProcessingAlgorithm):
     OUTPUT = 'OUTPUT'
 
     def tr(self, string):
-        """
-        Returns a translatable string with the self.tr() function.
-        """
         return QCoreApplication.translate('Processing', string)
 
     def createInstance(self):
         return save2CSV()
 
     def name(self):
-        """
-        Returns the algorithm name, used for identifying the algorithm.
-        """
         return 'save2CSV'
 
     def displayName(self):
-        """
-        Returns the translated algorithm name, which should be used for any
-        user-visible display of the algorithm name.
-        """
         return self.tr(self.name())
 
     def group(self):
-        """
-        Returns the name of the group this algorithm belongs to.
-        """
         return self.tr(self.groupId())
 
     def groupId(self):
-        """
-        Returns the unique ID of the group this algorithm belongs to.
-        """
-        return ''
+        return 'csv'
 
     def shortHelpString(self):
-        """
-        Returns a localised short helper string for the algorithm.
-        """
         return self.tr("Saves de active layer in a CSV file")
 
     def initAlgorithm(self, config=None):
-        """
-        Here we define the inputs and output of the algorithm, along
-        with some other properties.
-        """
-
-        # We add the input vector features source. It can have any kind of
-        # geometry.
+        #Inicializa el input y el output del algoritmo para
+        #recibir una capa vectorial y devolver un fichero CSV
         self.addParameter(
             QgsProcessingParameterFeatureSource(
                 self.INPUT,
@@ -69,10 +45,6 @@ class save2CSV(QgsProcessingAlgorithm):
                 [QgsProcessing.TypeVectorAnyGeometry]
             )
         )
-
-        # We add a feature sink in which to store our processed features (this
-        # usually takes the form of a newly created vector layer when the
-        # algorithm is run in QGIS).
         self.addParameter(
             QgsProcessingParameterFileDestination(
                 self.OUTPUT,
@@ -82,10 +54,9 @@ class save2CSV(QgsProcessingAlgorithm):
         )
 
     def processAlgorithm(self, parameters, context, feedback):
-        """
-        Here is where the processing itself takes place.
-        """
+        #guarda en source la capa de entrada
         source = self.parameterAsSource(parameters, self.INPUT, context)
+        #guarda en csv el path al fichero donde guardar los datos de la capa
         csv = self.parameterAsFileOutput(parameters,self.OUTPUT,context)
         #Atributos que se van a almacenar
         nombre_atributos = [atri.name() for atri in source.fields()]
@@ -94,6 +65,7 @@ class save2CSV(QgsProcessingAlgorithm):
         total = 100.0 / source.featureCount() if source.featureCount() else 0
         features = source.getFeatures()
         
+        #Abre y cierra el fichero CSV automaticamente
         with open(csv,'w') as f:
             #extraigo el nombre de los atributos
             nombre_atributos = [atri.name() for atri in source.fields()]
@@ -109,5 +81,4 @@ class save2CSV(QgsProcessingAlgorithm):
                 # Update the progress bar
                 feedback.setProgress(int(current * total))
 
-        
         return {self.OUTPUT: csv}

@@ -6,7 +6,11 @@ from qgis.core import QgsProcessingProvider
 from .save2CSV import save2CSV
 
 class save2CSV_provider(QgsProcessingProvider):
-
+    """
+    Este fichero es necesario para añadir un campo en la
+    caja de herramientas como "Análisis de redes" o "Cartografía"
+    donde dentro ira el grupo y el algoritmo que se crea
+    """
     def __init__(self):
         QgsProcessingProvider.__init__(self)
     
